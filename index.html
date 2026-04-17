@@ -1,0 +1,2362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="ico.png">
+<title>Dev Portfolio — Proyectos 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dim: rgba(201, 168, 76, 0.15);
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #141414;
+  --text: #f0ede6;
+  --muted: #6b6560;
+  --line: rgba(201, 168, 76, 0.2);
+  --green: #4ade80;
+  --red: #f87171;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* CURSOR CUSTOM — se activa por clase agregada desde JS solo en desktop */
+body.custom-cursor { cursor: none; }
+body.custom-cursor a, body.custom-cursor button, body.custom-cursor .card,
+body.custom-cursor .filter-btn, body.custom-cursor input, body.custom-cursor select {
+  cursor: none;
+}
+
+#cursor, #cursor-ring { display: none; }
+body.custom-cursor #cursor, body.custom-cursor #cursor-ring { display: block; }
+
+#cursor {
+  position: fixed; top: 0; left: 0;
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+}
+#cursor-ring {
+  position: fixed; top: 0; left: 0;
+  width: 38px; height: 38px;
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+}
+body.hover-target #cursor { width: 20px; height: 20px; background: var(--gold-light); }
+body.hover-target #cursor-ring { width: 60px; height: 60px; border-color: var(--gold); }
+
+/* NOISE OVERLAY */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+}
+
+/* INTRO */
+#intro {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 1000;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  overflow: hidden;
+}
+#intro::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  animation: scanline 2s ease-in-out infinite;
+}
+@keyframes scanline {
+  0% { transform: translateY(0) scaleX(0); }
+  50% { transform: translateY(0) scaleX(1); }
+  100% { transform: translateY(-100vh) scaleX(0.5); }
+}
+
+.intro-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intro-line {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 12vw, 10rem);
+  letter-spacing: 0.08em;
+  line-height: 0.88;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--gold);
+  opacity: 0;
+  transform: translateY(40px) skewX(-2deg);
+  animation: revealLine 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.intro-line.filled {
+  color: var(--gold);
+  -webkit-text-stroke: 0;
+  text-shadow: 0 0 80px rgba(201, 168, 76, 0.3);
+}
+.intro-line:nth-child(1) { animation-delay: 0.1s; }
+.intro-line:nth-child(2) { animation-delay: 0.35s; }
+.intro-line:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes revealLine {
+  to { opacity: 1; transform: translateY(0) skewX(0); }
+}
+
+.intro-sub {
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 2rem;
+  opacity: 0;
+  animation: revealLine 0.5s ease forwards 1s;
+}
+
+#intro-progress {
+  position: absolute; bottom: 3rem;
+  width: 200px; height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+#intro-progress::after {
+  content: '';
+  display: block; height: 100%;
+  background: var(--gold);
+  animation: loadBar 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes loadBar { from { width: 0; } to { width: 100%; } }
+
+.intro-skip {
+  position: absolute;
+  top: 2rem; right: 2rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  text-transform: uppercase;
+  opacity: 0;
+  animation: revealLine 0.5s ease forwards 1.5s;
+}
+
+#intro.exit {
+  animation: introExit 0.8s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+@keyframes introExit {
+  0% { opacity: 1; clip-path: inset(0 0 0 0); }
+  100% { opacity: 0; clip-path: inset(50% 0 50% 0); }
+}
+
+/* MAIN */
+#main { opacity: 0; transition: opacity 0.8s ease 0.2s; position: relative; z-index: 1; }
+#main.visible { opacity: 1; }
+
+/* HEADER */
+header {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.25rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  background: rgba(8, 8, 8, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+}
+.header-meta {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.status-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  margin-right: 0.4rem;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+}
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: flex-end;
+  padding: 6rem 2rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(201, 168, 76, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 168, 76, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 100%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 100%, black 40%, transparent 100%);
+}
+.hero-glow {
+  position: absolute; top: 20%; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; max-width: 900px; width: 100%; }
+.hero-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.hero-tag::before {
+  content: '';
+  flex: 0 0 40px; height: 1px;
+  background: var(--gold);
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 9vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+}
+.hero-title span { color: var(--gold); display: block; }
+.hero-body {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 520px;
+  letter-spacing: 0.03em;
+}
+.hero-stats {
+  margin-top: 3rem;
+  display: flex; gap: 3rem;
+  flex-wrap: wrap;
+}
+.stat-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+}
+.scroll-hint {
+  position: absolute; bottom: 2rem; right: 2rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.8rem;
+  writing-mode: vertical-rl;
+}
+.scroll-hint::after {
+  content: '';
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollDown 2s ease-in-out infinite;
+}
+@keyframes scrollDown {
+  0%, 100% { transform: scaleY(1); transform-origin: top; }
+  50% { transform: scaleY(0.5); transform-origin: bottom; }
+}
+
+/* FILTERS */
+#filters-wrapper {
+  padding: 0 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+.filters-row {
+  display: flex; gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  padding: 0.5rem 1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.filter-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.filter-btn.active {
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+}
+
+/* SECTION TITLE */
+.section-header {
+  padding: 3rem 2rem 1rem;
+  display: flex; align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: 0.06em;
+}
+.section-title span { color: var(--gold); }
+.section-meta {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* GRID */
+#projects-grid {
+  padding: 2rem 2rem 6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+/* CARD */
+.card {
+  position: relative;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  padding: 2rem 1.75rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.card.in { opacity: 1; transform: translateY(0); }
+.card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(201, 168, 76, 0.03) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+.card:hover::before { opacity: 1; }
+
+.card-index {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  margin-bottom: 1rem;
+}
+.card-status {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line);
+}
+.card-status .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+.card-status.active { color: var(--green); border-color: rgba(74, 222, 128, 0.3); }
+.card-status.active .dot { background: var(--green); animation: pulse 2s infinite; }
+.card-status.dev { color: var(--gold); border-color: rgba(201, 168, 76, 0.4); }
+.card-status.dev .dot { background: var(--gold); }
+.card-status.planning { color: var(--muted); }
+.card-status.planning .dot { background: var(--muted); }
+.card-status.paused { color: var(--red); border-color: rgba(248, 113, 113, 0.3); }
+.card-status.paused .dot { background: var(--red); }
+
+.card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+  line-height: 1.1;
+}
+.card-subtitle {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.card-desc {
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--text);
+  opacity: 0.75;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+/* Role + team row */
+.card-meta {
+  display: flex; gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px dashed var(--line);
+  flex-wrap: wrap;
+}
+.meta-item {
+  flex: 1; min-width: 100px;
+}
+.meta-item-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.meta-item-value {
+  font-size: 0.75rem;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+/* Progress */
+.progress-label {
+  display: flex; justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.progress-label > span:first-child {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.progress-pct {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+.progress-track {
+  height: 2px;
+  background: rgba(201, 168, 76, 0.1);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--gold);
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.progress-fill.animated {
+  width: var(--w);
+}
+
+/* Tags */
+.card-tags {
+  display: flex; flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+.tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--line);
+  text-transform: uppercase;
+}
+
+/* Footer */
+.card-footer {
+  display: flex; justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--line);
+}
+.eta-label {
+  display: block;
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.eta-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+.card-arrow {
+  font-size: 1.2rem;
+  color: var(--gold);
+  transition: transform 0.3s ease;
+}
+.card:hover .card-arrow { transform: translateX(6px); }
+
+/* MODAL */
+#modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+}
+#modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  max-width: 880px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#modal-overlay.open .modal { transform: scale(1); }
+
+.modal-close {
+  position: absolute; top: 1rem; right: 1rem;
+  width: 40px; height: 40px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  z-index: 10;
+  font-family: inherit;
+}
+.modal-close:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.modal-body { padding: 2.5rem 2rem; }
+
+/* Scrollbar */
+.modal::-webkit-scrollbar { width: 6px; }
+.modal::-webkit-scrollbar-track { background: var(--bg); }
+.modal::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+.modal-tag {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.modal-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.modal-subtitle {
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Carrusel de imágenes */
+.modal-images {
+  margin-bottom: 2.5rem;
+}
+.carousel {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  aspect-ratio: 16 / 10;
+}
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.carousel-slide {
+  flex: 0 0 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.carousel-caption {
+  position: absolute;
+  bottom: 1rem; left: 1rem;
+  background: rgba(8, 8, 8, 0.8);
+  padding: 0.4rem 0.8rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--text);
+  text-transform: uppercase;
+  border-left: 2px solid var(--gold);
+}
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(8, 8, 8, 0.7);
+  border: 1px solid var(--line);
+  color: var(--gold);
+  width: 40px; height: 40px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.carousel-btn:hover {
+  background: var(--gold);
+  color: var(--bg);
+}
+.carousel-prev { left: 1rem; }
+.carousel-next { right: 1rem; }
+.carousel-dots {
+  display: flex; gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.carousel-dot {
+  width: 6px; height: 6px;
+  background: var(--muted);
+  opacity: 0.3;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+.carousel-dot.active { opacity: 1; background: var(--gold); }
+.no-images {
+  padding: 3rem 2rem;
+  text-align: center;
+  background: var(--bg3);
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.modal-section {
+  margin-bottom: 2rem;
+}
+.modal-section-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.modal-section-label::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--gold);
+}
+.modal-text {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--text);
+  opacity: 0.85;
+  letter-spacing: 0.02em;
+}
+
+/* Stack grid */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+.stack-group {
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  padding: 1rem;
+}
+.stack-group-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--line);
+}
+.stack-group-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.stack-item {
+  font-size: 0.75rem;
+  color: var(--text);
+  opacity: 0.85;
+  letter-spacing: 0.02em;
+}
+.stack-item::before {
+  content: '— ';
+  color: var(--gold);
+  opacity: 0.5;
+}
+
+/* Info grid (role, team, client) */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+.info-box {
+  background: var(--bg3);
+  border-left: 2px solid var(--gold);
+  padding: 0.8rem 1rem;
+}
+.info-box-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+.info-box-value {
+  font-size: 0.85rem;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+/* Milestones */
+.milestone-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.milestone-list li {
+  font-size: 0.8rem;
+  padding: 0.6rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  letter-spacing: 0.02em;
+  background: var(--bg3);
+  border-left: 2px solid transparent;
+}
+.milestone-list li.done { color: var(--green); border-left-color: var(--green); }
+.milestone-list li.wip { color: var(--gold); border-left-color: var(--gold); }
+.milestone-list li.pending { color: var(--muted); }
+.milestone-icon {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.9rem;
+  width: 1rem;
+  flex-shrink: 0;
+}
+
+/* FOOTER */
+footer {
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between;
+  align-items: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* LOADING STATE */
+#loader {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  header { padding: 1rem 1.25rem; }
+  .logo { font-size: 1.1rem; }
+  .header-meta { font-size: 0.6rem; letter-spacing: 0.18em; }
+  #hero { padding: 5rem 1.25rem 3rem; }
+  #filters-wrapper { padding: 0 1.25rem; }
+  .section-header { padding: 2rem 1.25rem 1rem; }
+  #projects-grid { padding: 1.5rem 1.25rem 4rem; grid-template-columns: 1fr; gap: 1rem; }
+  .card { padding: 1.5rem 1.25rem; }
+  .card-status { top: 1rem; right: 1rem; }
+  .modal-body { padding: 1.75rem 1.25rem; }
+  .hero-stats { gap: 1.5rem; }
+  .stat-number { font-size: 2rem; }
+  .scroll-hint { display: none; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  #intro { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- INTRO -->
+<div id="intro" title="Haz click para saltar">
+  <div class="intro-lines">
+    <div class="intro-line">DEV</div>
+    <div class="intro-line filled">PORTFOLIO</div>
+    <div class="intro-line">2026</div>
+  </div>
+  <div class="intro-sub">Proyectos en desarrollo</div>
+  <div id="intro-progress"></div>
+  <div class="intro-skip">Click o ESC para continuar</div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <header>
+    <div class="logo" id="logo-name">PORTFOLIO</div>
+    <div class="header-meta">
+      <span class="status-dot"></span><span id="last-update">ACTUALIZADO</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Estado de proyectos · Q2 2026</div>
+      <h1 class="hero-title">
+        Proyectos
+        <span>en ejecución</span>
+      </h1>
+      <p class="hero-body">
+        Vista general de los proyectos activos en los que estoy trabajando, su estatus de avance,
+        tecnologías utilizadas y tiempo estimado de cierre. Haz clic en cualquier tarjeta para ver
+        el detalle completo.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number" id="count-projects">0</div>
+          <div class="stat-label">Proyectos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="count-active">0</div>
+          <div class="stat-label">En curso</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="count-done">0</div>
+          <div class="stat-label">En producción</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll</div>
+  </section>
+
+  <!-- SECTION TITLE + FILTERS -->
+  <div class="section-header">
+    <h2 class="section-title">Todos los <span>proyectos</span></h2>
+    <div class="section-meta" id="showing-count">— PROYECTOS</div>
+  </div>
+
+  <div id="filters-wrapper">
+    <div class="filters-row" id="filters"></div>
+  </div>
+
+  <!-- GRID -->
+  <div id="loader">CARGANDO PROYECTOS...</div>
+  <div id="projects-grid" style="display:none"></div>
+
+  <footer>
+    <div>© 2026 · Dev Portfolio</div>
+    <div>Hecho con cuidado · <span style="color:var(--gold)">✦</span></div>
+  </footer>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+    <div class="modal-body" id="modal-content"></div>
+  </div>
+</div>
+
+<script id="embedded-data">
+// Datos embebidos - fallback cuando se abre con file:// (doble click).
+// Si sirves el archivo con un servidor, se usa data/projects.json.
+window.__PORTFOLIO_DATA__ = {
+  "meta": {
+    "owner": "J. PABLO RETANA L.",
+    "role": "Analista / Desarrollador de Sistemas",
+    "lastUpdate": "2026-04-17",
+    "location": "Cd. Guzmán, Jal."
+  },
+  "projects": [
+    {
+      "id": 1,
+      "slug": "factura-v2",
+      "title": "Sistema de Facturación CFDI v2",
+      "subtitle": "Full-Stack · Flask + PostgreSQL",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 85,
+      "eta": "2 semanas",
+      "priority": "baja",
+      "type": "Aplicación web",
+      "role": "Ayuda en implementación",
+      "team": "2 personas",
+      "client": "Personal de facturación/administración",
+      "startDate": "2026-03-18",
+      "estimatedEnd": "2026-04-30",
+      "desc": "Facturación CFDI automatizada para 19 sucursales de Grupo Canave vía Facturama API. En producción en DigitalOcean con Nginx + Gunicorn, acceso por Tailscale.",
+      "current": "Estabilización en producción: manejo de sesiones PostgreSQL, validación de límite SAT 72h y portal de auto-factura liberado.",
+      "missing": "Cobertura de pruebas automatizadas, capacitación a usuarios finales y features adicionales por confirmar.",
+      "stack": {
+        "frontend": [
+          "Jinja2",
+          "HTML5",
+          "JavaScript"
+        ],
+        "backend": [
+          "Flask 3.0",
+          "Python 3.12",
+          "Gunicorn",
+          "Flask-SQLAlchemy",
+          "Flask-Login",
+          "Alembic"
+        ],
+        "database": [
+          "PostgreSQL",
+          "SQL Server"
+        ],
+        "infra": [
+          "Ubuntu 24.04",
+          "DigitalOcean Droplet",
+          "Nginx",
+          "Tailscale",
+          "systemctl"
+        ],
+        "otros": [
+          "psycopg2-binary",
+          "pyodbc",
+          "Facturama API",
+          "Fernet/AES-256",
+          "Flask-WTF"
+        ]
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Autenticación y gestión de roles",
+          "done": true
+        },
+        {
+          "label": "Generación batch de CFDIs (Corte Z, Lote, Tickets)",
+          "done": true
+        },
+        {
+          "label": "Portal de auto-factura para clientes",
+          "done": true
+        },
+        {
+          "label": "Despliegue en producción (Droplet + Nginx)",
+          "done": true
+        },
+        {
+          "label": "Pruebas automatizadas y cobertura",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Capacitación a usuarios finales",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "canaveia-ollama",
+      "title": "Canave IA — Asistente BI",
+      "subtitle": "Full-Stack · FastAPI + Streamlit",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 75,
+      "eta": "2.5 meses",
+      "priority": "alta",
+      "type": "Aplicación web",
+      "role": "Desarrollador full stack",
+      "team": "2 personas",
+      "client": "Dirección, compras, supervisión y administración",
+      "startDate": "2026-04-06",
+      "estimatedEnd": "2026-06-30",
+      "desc": "Asistente de Business Intelligence con lenguaje natural para Grupo Canave. 42 plantillas SQL certificadas sobre datos de ventas e inventario, sin riesgo de modificación.",
+      "current": "42 plantillas SQL operando, suite de 102 tests pasando, dashboard de KPIs con alertas proactivas en uso activo.",
+      "missing": "Confirmar backlog de features pendientes y nuevas plantillas SQL según necesidades del negocio.",
+      "stack": {
+        "frontend": [
+          "Streamlit"
+        ],
+        "backend": [
+          "FastAPI",
+          "Python 3.9+",
+          "Uvicorn"
+        ],
+        "database": [
+          "SQL Server (NOVACAJA5)",
+          "SQL Server (ControlStock)"
+        ],
+        "infra": [
+          "Tailscale",
+          "scripts .bat"
+        ],
+        "otros": [
+          "pandas",
+          "plotly",
+          "sentence-transformers",
+          "pyodbc",
+          "sqlparse",
+          "openpyxl",
+          "Ollama",
+          "pytest"
+        ]
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Autenticación SHA-256 + pantalla de intro",
+          "done": true
+        },
+        {
+          "label": "42 plantillas SQL certificadas",
+          "done": true
+        },
+        {
+          "label": "Dashboard de KPIs y alertas proactivas",
+          "done": true
+        },
+        {
+          "label": "Suite de 102 pruebas automatizadas",
+          "done": true
+        },
+        {
+          "label": "Integración con Ollama (LLM local)",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Backlog de features adicionales",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "inventarios",
+      "title": "Sistema de Inventario Físico",
+      "subtitle": "Full-Stack · JavaScript + FastAPI",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 80,
+      "eta": "3 semanas",
+      "priority": "baja",
+      "type": "Aplicación web",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Encargado y personal de almacén central",
+      "startDate": "2026-03-15",
+      "estimatedEnd": "2026-05-04",
+      "desc": "App web para conteo físico de inventario por filas de almacén (F1–F8). Opera en modo local sin red o en modo compartido con sincronización en tiempo real entre operadores.",
+      "current": "Sistema funcional en ambos modos con exportación a Excel, auto-guardado y seguimiento por operador.",
+      "missing": "Integración directa con SQL Server para importar existencias y definir features adicionales del backlog.",
+      "stack": {
+        "frontend": [
+          "HTML5",
+          "JavaScript (vanilla)",
+          "localStorage"
+        ],
+        "backend": [
+          "FastAPI",
+          "Uvicorn",
+          "Python",
+          "SQLAlchemy",
+          "pyodbc"
+        ],
+        "database": [
+          "SQL Server",
+          "localStorage"
+        ],
+        "infra": [
+          "Scripts .bat (Windows)"
+        ],
+        "otros": [
+          "python-dotenv",
+          "openpyxl"
+        ]
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Frontend de conteo (modo local)",
+          "done": true
+        },
+        {
+          "label": "Importación Excel por drag & drop",
+          "done": true
+        },
+        {
+          "label": "Exportación a Excel con plantilla",
+          "done": true
+        },
+        {
+          "label": "Backend FastAPI + modo multi-operador",
+          "done": true
+        },
+        {
+          "label": "Importación directa desde SQL Server",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Features adicionales del backlog",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "resurtido-app",
+      "title": "Dashboard de Resurtido de Stock",
+      "subtitle": "Full-Stack · Flask + SQL Server",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 80,
+      "eta": "5 semanas",
+      "priority": "baja",
+      "type": "Aplicación web",
+      "role": "Desarrollador",
+      "team": "1 persona",
+      "client": "Distribución y compras",
+      "startDate": "2026-04-06",
+      "estimatedEnd": "2026-05-31",
+      "desc": "Réplica web del reporte Power BI Resurtido_V2 con datos en tiempo real desde SQL Server. Calcula faltantes de stock según ventas históricas y parámetros ajustables.",
+      "current": "Dashboard funcional con sliders de parámetros, filtros por sucursal/producto y exportación CSV.",
+      "missing": "Optimización de queries SQL pesadas y definir si se despliega en servidor compartido o se mantiene local.",
+      "stack": {
+        "frontend": [
+          "HTML5",
+          "CSS",
+          "JavaScript"
+        ],
+        "backend": [
+          "Flask 3.1.0",
+          "Python 3.9+",
+          "flask-cors"
+        ],
+        "database": [
+          "SQL Server (NOVACAJA5)",
+          "SQL Server (ControlStock)"
+        ],
+        "infra": [
+          "Tailscale",
+          "ODBC Driver 17 for SQL Server"
+        ],
+        "otros": [
+          "pyodbc",
+          "pandas",
+          "python-dotenv"
+        ]
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Réplica del modelo de datos Power BI",
+          "done": true
+        },
+        {
+          "label": "Sliders de parámetros interactivos",
+          "done": true
+        },
+        {
+          "label": "Filtros por sucursal y producto",
+          "done": true
+        },
+        {
+          "label": "Exportación a CSV",
+          "done": true
+        },
+        {
+          "label": "Optimización de queries SQL",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Despliegue en servidor compartido",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "asistente-medico",
+      "title": "Consultor PLM — Asistente Médico",
+      "subtitle": "Frontend · JavaScript estático",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 70,
+      "eta": "6 semanas",
+      "priority": "media",
+      "type": "Aplicación web",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Personal de ventas en sucursales",
+      "startDate": "2026-03-12",
+      "estimatedEnd": "2026-05-31",
+      "desc": "Consultora web de base de datos PLM para uso en mostrador de farmacia. Fichas técnicas completas de medicamentos con respuestas determinísticas locales, sin LLM ni backend.",
+      "current": "App publicada en GitHub Pages con base PLM activa, índice de imágenes y modos rápido/completo funcionando.",
+      "missing": "Ampliar base PLM con medicamentos pendientes y fragmentar archivos grandes que exceden el límite de GitHub.",
+      "stack": {
+        "frontend": [
+          "HTML5",
+          "JavaScript (vanilla)"
+        ],
+        "backend": [],
+        "database": [
+          "JSON local (plm_data.json)",
+          "Markdown por producto"
+        ],
+        "infra": [
+          "GitHub Pages"
+        ],
+        "otros": []
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Base PLM inicial estructurada en JSON",
+          "done": true
+        },
+        {
+          "label": "Búsqueda y fichas técnicas completas",
+          "done": true
+        },
+        {
+          "label": "Publicación en GitHub Pages",
+          "done": true
+        },
+        {
+          "label": "Índice de imágenes por producto",
+          "done": true
+        },
+        {
+          "label": "Expansión de base PLM (medicamentos pendientes)",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Fragmentar archivos grandes para GitHub",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "crypto-bot",
+      "title": "CryptoBot — Polymarket Trading Bot",
+      "subtitle": "Backend · Python + Web3 + Redis",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 50,
+      "eta": "14 semanas",
+      "priority": "baja",
+      "type": "Bot / Backend",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Sistemas",
+      "startDate": "2026-04-15",
+      "estimatedEnd": "2026-07-31",
+      "desc": "Bot de copy-trading para Polymarket con dashboard terminal TUI, servidor WebSocket, integración blockchain vía Web3 y alertas en tiempo real por Telegram.",
+      "current": "Arquitectura definida e implementada: core trading, caché Redis, API WebSocket y notificaciones Telegram.",
+      "missing": "Avance real pendiente de revisión — completar backlog y validar en operación real.",
+      "stack": {
+        "frontend": [
+          "Textual (TUI)",
+          "Rich"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI",
+          "Uvicorn",
+          "aiohttp",
+          "websockets"
+        ],
+        "database": [
+          "Redis"
+        ],
+        "infra": [
+          "python-dotenv"
+        ],
+        "otros": [
+          "py-clob-client",
+          "web3",
+          "eth-account",
+          "python-telegram-bot",
+          "pydantic",
+          "loguru",
+          "pytest"
+        ]
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Integración con CLOB de Polymarket",
+          "done": true
+        },
+        {
+          "label": "Caché de datos de mercado con Redis",
+          "done": true
+        },
+        {
+          "label": "Dashboard TUI con Textual",
+          "done": true
+        },
+        {
+          "label": "Alertas por Telegram",
+          "done": true
+        },
+        {
+          "label": "Servidor WebSocket para integración externa",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Testing y estabilización en producción real",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "buscador-posiciones",
+      "title": "Buscador de Posiciones en Almacén",
+      "subtitle": "Frontend · JavaScript estático",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 95,
+      "eta": "En vivo",
+      "priority": "alta",
+      "type": "Aplicación web",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Personal de almacén",
+      "startDate": "2026-02-01",
+      "estimatedEnd": null,
+      "desc": "Buscador web estático para localizar productos en almacén por código de barras, código o nombre. Funciona desde móvil con escáner, desplegado en GitHub Pages.",
+      "current": "En producción en GitHub Pages. Búsqueda por código, nombre y posición con modo escáner activo.",
+      "missing": "Mejoras de UX o funcionalidades adicionales por definir.",
+      "stack": {
+        "frontend": [
+          "HTML5",
+          "JavaScript (vanilla)"
+        ],
+        "backend": [],
+        "database": [
+          "Excel (.xlsx)"
+        ],
+        "infra": [
+          "GitHub Pages"
+        ],
+        "otros": []
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Carga y parseo de Excel de posiciones",
+          "done": true
+        },
+        {
+          "label": "Búsqueda por código de barras y nombre",
+          "done": true
+        },
+        {
+          "label": "Modo escáner para dispositivos móviles",
+          "done": true
+        },
+        {
+          "label": "Publicación en GitHub Pages",
+          "done": true
+        },
+        {
+          "label": "Mejoras de UX adicionales (REVISAR)",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "slug": "armado-de-pedidos-v2",
+      "title": "Armado de Pedidos v2",
+      "subtitle": "Escritorio · Python + tkinter",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 90,
+      "eta": "En vivo",
+      "priority": "baja",
+      "type": "Aplicación de escritorio",
+      "role": "Mejora de proyecto",
+      "team": "1 persona",
+      "client": "Personal de distribución",
+      "startDate": "2026-03-30",
+      "estimatedEnd": null,
+      "desc": "App de escritorio para armado de pedidos en almacén de farmacia. Carga Excel por drag & drop y genera archivos separados por fila de almacén para el picking físico.",
+      "current": "v2.2 compilada y distribuida como .exe standalone con drag & drop y modo oscuro. En uso en almacén.",
+      "missing": "Confirmar si hay features pendientes para versión siguiente.",
+      "stack": {
+        "frontend": [
+          "tkinter",
+          "tkinterdnd2"
+        ],
+        "backend": [
+          "Python 3.11+"
+        ],
+        "database": [],
+        "infra": [
+          "PyInstaller"
+        ],
+        "otros": [
+          "pandas",
+          "openpyxl",
+          "Pillow"
+        ]
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Carga de Excel por drag & drop",
+          "done": true
+        },
+        {
+          "label": "Generación de archivos por fila de almacén",
+          "done": true
+        },
+        {
+          "label": "Interfaz con modo oscuro",
+          "done": true
+        },
+        {
+          "label": "Configuración persistente (JSON)",
+          "done": true
+        },
+        {
+          "label": "Compilación como .exe standalone — v2.2",
+          "done": true
+        },
+        {
+          "label": "Features adicionales v2.3 (REVISAR)",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "slug": "experto-novacaja",
+      "title": "Experto NovaCaja — Asistente RAG",
+      "subtitle": "Escritorio · Flask + RAG local",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 95,
+      "eta": "En vivo",
+      "priority": "media",
+      "type": "Aplicación de escritorio",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Personal de IT y soporte",
+      "startDate": null,
+      "estimatedEnd": null,
+      "desc": "Asistente experto de NovaCaja con RAG local distribuido como .exe standalone. Consultas en lenguaje natural sobre el sistema NovaCaja sin internet ni APIs externas.",
+      "current": "v1.0 compilada con base de conocimiento completa (1.3 MB Markdown + 1.5 MB índice semántico), lista para distribución.",
+      "missing": "Actualizar base de conocimiento si NovaCaja modifica su documentación.",
+      "stack": {
+        "frontend": [
+          "HTML5 (vía Flask)"
+        ],
+        "backend": [
+          "Flask",
+          "Python"
+        ],
+        "database": [
+          "Markdown (1.3 MB)",
+          "JSON semántico (1.5 MB)"
+        ],
+        "infra": [
+          "PyInstaller"
+        ],
+        "otros": []
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Extracción de base de conocimiento (crawler)",
+          "done": true
+        },
+        {
+          "label": "Índice semántico JSON para búsqueda RAG",
+          "done": true
+        },
+        {
+          "label": "Motor RAG + interfaz Flask local",
+          "done": true
+        },
+        {
+          "label": "Compilación como .exe standalone — v1.0",
+          "done": true
+        },
+        {
+          "label": "Actualización de base de conocimiento",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "slug": "monitor-recursos",
+      "title": "Monitor de Recursos del Sistema",
+      "subtitle": "Escritorio · Python + psutil",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 95,
+      "eta": "En vivo",
+      "priority": "baja",
+      "type": "Aplicación de escritorio",
+      "role": "Desarrollador",
+      "team": "Solo",
+      "client": "Uso personal / diagnóstico",
+      "startDate": "2026-04-06",
+      "estimatedEnd": null,
+      "desc": "Ventana flotante estilo macOS para monitorear CPU, RAM, disco y red en Windows. Muy ligera (~20 MB RAM, <1% CPU), con gráfica de historial y temas claro/oscuro.",
+      "current": "v2.0 compilada con anillos visuales, historial de 60s, top procesos y soporte de temas. En uso diario.",
+      "missing": "Sin mejoras planificadas — herramienta completa para su propósito.",
+      "stack": {
+        "frontend": [
+          "tkinter"
+        ],
+        "backend": [
+          "Python"
+        ],
+        "database": [],
+        "infra": [
+          "PyInstaller"
+        ],
+        "otros": [
+          "psutil"
+        ]
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Monitor básico CPU y RAM (v1)",
+          "done": true
+        },
+        {
+          "label": "Anillos visuales y gráfica de historial (v2)",
+          "done": true
+        },
+        {
+          "label": "Top 7 procesos por uso de CPU",
+          "done": true
+        },
+        {
+          "label": "Temas claro y oscuro",
+          "done": true
+        },
+        {
+          "label": "Compilación como .exe standalone — v2.0",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "slug": "crawler-novacaja",
+      "title": "Crawler de Documentación NovaCaja",
+      "subtitle": "Scraping · Python + BeautifulSoup",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 100,
+      "eta": "En vivo",
+      "priority": "baja",
+      "type": "Herramienta CLI",
+      "role": "Desarrollador",
+      "team": "1 persona",
+      "client": "Uso en servidor",
+      "startDate": "2026-04-13",
+      "estimatedEnd": null,
+      "desc": "Web scraper que extrae y estructura la documentación técnica del portal NovaCaja para RAG. Genera Markdown, índice JSON semántico y chunks JSONL para embeddings.",
+      "current": "Extracción completa finalizada en múltiples versiones. Scraper PLM complementario incluido.",
+      "missing": "Re-ejecutar si NovaCaja actualiza su documentación.",
+      "stack": {
+        "frontend": [],
+        "backend": [
+          "Python"
+        ],
+        "database": [],
+        "infra": [],
+        "otros": [
+          "requests",
+          "BeautifulSoup4",
+          "lxml"
+        ]
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Auto-login y descubrimiento de páginas",
+          "done": true
+        },
+        {
+          "label": "Generación de Markdown estructurado",
+          "done": true
+        },
+        {
+          "label": "Índice JSON semántico para RAG",
+          "done": true
+        },
+        {
+          "label": "Chunks JSONL para embeddings",
+          "done": true
+        },
+        {
+          "label": "Scraper PLM complementario",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "slug": "prueba-teclado",
+      "title": "Probador de Teclado",
+      "subtitle": "Utilidad · Python + tkinter",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 100,
+      "eta": "En vivo",
+      "priority": "baja",
+      "type": "Herramienta de escritorio",
+      "role": "Desarrollador",
+      "team": "Solo",
+      "client": "Uso interno / diagnóstico de hardware",
+      "startDate": "2026-04-16",
+      "estimatedEnd": null,
+      "desc": "Utilidad de escritorio para verificar qué teclas funcionan en un teclado físico. Muestra un layout visual marcando teclas detectadas (verde) y no detectadas (rojo).",
+      "current": "v1.0 compilada y funcional como ejecutable standalone.",
+      "missing": "Sin mejoras planificadas — utilidad completa para su propósito.",
+      "stack": {
+        "frontend": [
+          "tkinter"
+        ],
+        "backend": [
+          "Python"
+        ],
+        "database": [],
+        "infra": [
+          "PyInstaller"
+        ],
+        "otros": []
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Layout visual del teclado completo",
+          "done": true
+        },
+        {
+          "label": "Detección en tiempo real de teclas",
+          "done": true
+        },
+        {
+          "label": "Reporte de teclas no detectadas",
+          "done": true
+        },
+        {
+          "label": "Compilación como .exe standalone — v1.0",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "slug": "facturacion-legacy",
+      "title": "Sistema de Facturación v1 (Legacy)",
+      "subtitle": "Full-Stack · Flask + SQL Server",
+      "status": "paused",
+      "statusLabel": "Pausado",
+      "progress": 100,
+      "eta": "En espera",
+      "priority": "baja",
+      "type": "Aplicación web",
+      "role": "Soporte",
+      "team": "2 personas",
+      "client": "Admon y facturación",
+      "startDate": "2024-10-17",
+      "estimatedEnd": null,
+      "desc": "Primera versión del sistema de facturación CFDI para Grupo Canave. Reemplazada por factura-v2 en marzo 2026. Mantenida como referencia histórica del proceso de migración.",
+      "current": "Proyecto pausado — reemplazado por factura-v2 con arquitectura más robusta (PostgreSQL, Alembic, seguridad reforzada).",
+      "missing": "No aplica — reemplazado activamente por factura-v2.",
+      "stack": {
+        "frontend": [
+          "Jinja2",
+          "HTML5"
+        ],
+        "backend": [
+          "Flask 3.0.3",
+          "Python",
+          "Flask-SQLAlchemy"
+        ],
+        "database": [
+          "SQL Server"
+        ],
+        "infra": [],
+        "otros": []
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Generación de CFDIs vía Facturama API",
+          "done": true
+        },
+        {
+          "label": "Gestión de Cortes Z y tickets",
+          "done": true
+        },
+        {
+          "label": "CRUD de clientes receptores",
+          "done": true
+        },
+        {
+          "label": "Registro de auditoría por usuario",
+          "done": true
+        },
+        {
+          "label": "Reemplazado por factura-v2",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "slug": "consolidador-hojas-pedido",
+      "title": "Consolidador de Hojas de Pedido",
+      "subtitle": "Escritorio · Python + tkinter",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 95,
+      "eta": "En vivo",
+      "priority": "media",
+      "type": "Aplicación de escritorio",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Personal de distribución y almacén",
+      "startDate": "2025-12-30",
+      "estimatedEnd": null,
+      "desc": "App de escritorio que consolida traspasos de bodega a sucursales desde NovaCaja y genera hojas Excel apiladas con plantillas externas por destino (GENERAL, COLIMA, MANZANILLO, TECOMAN).",
+      "current": "v1.0 compilada como .exe standalone con tema oscuro y claro. Plantillas Excel externas editables sin recompilar.",
+      "missing": "Confirmar si se necesitan plantillas para sucursales adicionales.",
+      "stack": {
+        "frontend": [
+          "tkinter",
+          "ttk"
+        ],
+        "backend": [
+          "Python"
+        ],
+        "database": [
+          "SQL Server (NOVACAJA5)"
+        ],
+        "infra": [
+          "PyInstaller",
+          "Tailscale"
+        ],
+        "otros": [
+          "pyodbc",
+          "openpyxl"
+        ]
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Consulta de traspasos desde SQL Server",
+          "done": true
+        },
+        {
+          "label": "Selección interactiva de notas (Treeview doble)",
+          "done": true
+        },
+        {
+          "label": "Plantillas Excel externas por destino (4 sucursales)",
+          "done": true
+        },
+        {
+          "label": "Tema oscuro y tema claro",
+          "done": true
+        },
+        {
+          "label": "Compilación como .exe standalone",
+          "done": true
+        },
+        {
+          "label": "Plantillas adicionales por sucursal (REVISAR)",
+          "done": false
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script>
+(function () {
+  'use strict';
+
+  let PROJECTS = [];
+  let META = {};
+  let currentFilter = 'all';
+
+  // Cursor y intro arrancan YA, independientes de la carga de datos
+  setupCursor();
+
+  // Fallback data para cuando se abre con file:// (sin servidor)
+  const FALLBACK_DATA = window.__PORTFOLIO_DATA__ || null;
+
+  // ── LOAD DATA ──────────────────────────────────────────────────────────────
+  function loadData() {
+    // Si el protocolo es file://, fetch no funciona — usar datos embebidos
+    if (location.protocol === 'file:' && FALLBACK_DATA) {
+      console.info('[portfolio] Usando datos embebidos (file://)');
+      return Promise.resolve(FALLBACK_DATA);
+    }
+    return fetch('data/projects.json')
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      });
+  }
+
+  loadData()
+    .then(function (data) {
+      PROJECTS = data.projects || [];
+      META = data.meta || {};
+      init();
+    })
+    .catch(function (err) {
+      console.error('[portfolio] Error cargando datos:', err);
+      // Aun si falla, mostrar UI con mensaje para que no se quede colgado
+      PROJECTS = [];
+      META = {};
+      init(err);
+    });
+
+  function init(loadError) {
+    // Meta header
+    if (META.owner) document.getElementById('logo-name').textContent = (META.owner + '').toUpperCase();
+    if (META.lastUpdate) document.getElementById('last-update').textContent = 'ACT ' + META.lastUpdate;
+
+    renderFilters();
+
+    if (loadError) {
+      const loader = document.getElementById('loader');
+      const grid = document.getElementById('projects-grid');
+      loader.innerHTML =
+        'NO SE PUDO CARGAR data/projects.json<br><br>' +
+        '<span style="color:var(--gold);letter-spacing:0.1em">' +
+        'Abre el proyecto con un servidor local:</span><br>' +
+        '<code style="display:inline-block;margin-top:0.8rem;padding:0.5rem 1rem;background:var(--bg3);color:var(--text);letter-spacing:0.05em;text-transform:none">python3 -m http.server 8000</code>';
+      grid.style.display = 'none';
+    } else {
+      renderProjects('all');
+    }
+
+    setupModal();
+    runIntroSequence();
+  }
+
+  // ── FILTERS ────────────────────────────────────────────────────────────────
+  function renderFilters() {
+    const filters = [
+      { key: 'all', label: 'Todos' },
+      { key: 'dev', label: 'En desarrollo' },
+      { key: 'active', label: 'En producción' },
+      { key: 'planning', label: 'Planificación' },
+      { key: 'paused', label: 'Pausados' }
+    ];
+    const wrap = document.getElementById('filters');
+    filters.forEach(function (f) {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn' + (f.key === 'all' ? ' active' : '');
+      btn.textContent = f.label;
+      btn.dataset.filter = f.key;
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentFilter = f.key;
+        renderProjects(f.key);
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  // ── RENDER CARDS ───────────────────────────────────────────────────────────
+  function renderProjects(filter) {
+    const grid = document.getElementById('projects-grid');
+    grid.innerHTML = '';
+    grid.style.display = 'grid';
+    document.getElementById('loader').style.display = 'none';
+
+    const list = filter === 'all'
+      ? PROJECTS
+      : PROJECTS.filter(function (p) { return p.status === filter; });
+
+    document.getElementById('showing-count').textContent =
+      list.length + (list.length === 1 ? ' PROYECTO' : ' PROYECTOS');
+
+    if (list.length === 0) {
+      grid.innerHTML = '<div style="padding:3rem;text-align:center;color:var(--muted);grid-column:1/-1;letter-spacing:0.2em;text-transform:uppercase;font-size:0.75rem">Sin proyectos en esta categoría</div>';
+      return;
+    }
+
+    list.forEach(function (p, i) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.transitionDelay = (i * 0.05) + 's';
+
+      const roleLine = p.role
+        ? '<div class="meta-item"><div class="meta-item-label">Rol</div><div class="meta-item-value">' + escapeHtml(p.role) + '</div></div>'
+        : '';
+      const teamLine = p.team
+        ? '<div class="meta-item"><div class="meta-item-label">Equipo</div><div class="meta-item-value">' + escapeHtml(p.team) + '</div></div>'
+        : '';
+
+      // Flatten stack para los tags
+      const flatStack = flattenStack(p.stack).slice(0, 4);
+
+      card.innerHTML =
+        '<div class="card-index">' + String(p.id).padStart(2, '0') + ' / ' + String(PROJECTS.length).padStart(2, '0') + '</div>' +
+        '<div class="card-status ' + p.status + '"><span class="dot"></span>' + escapeHtml(p.statusLabel) + '</div>' +
+        '<h3 class="card-title">' + escapeHtml(p.title) + '</h3>' +
+        '<div class="card-subtitle">' + escapeHtml(p.subtitle) + '</div>' +
+        '<p class="card-desc">' + escapeHtml(p.desc) + '</p>' +
+        (roleLine || teamLine ? '<div class="card-meta">' + roleLine + teamLine + '</div>' : '') +
+        '<div class="progress-label">' +
+          '<span>Progreso</span>' +
+          '<span class="progress-pct">' + p.progress + '%</span>' +
+        '</div>' +
+        '<div class="progress-track">' +
+          '<div class="progress-fill" style="--w:' + p.progress + '%"></div>' +
+        '</div>' +
+        '<div class="card-tags">' +
+          flatStack.map(function (t) { return '<span class="tag">' + escapeHtml(t) + '</span>'; }).join('') +
+        '</div>' +
+        '<div class="card-footer">' +
+          '<div>' +
+            '<span class="eta-label">ETA</span>' +
+            '<span class="eta-value">' + escapeHtml(p.eta) + '</span>' +
+          '</div>' +
+          '<div class="card-arrow">→</div>' +
+        '</div>';
+
+      card.addEventListener('click', function () { openModal(p); });
+      grid.appendChild(card);
+    });
+
+    // Observer + animaciones de progreso
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          e.target.querySelectorAll('.progress-fill').forEach(function (bar) {
+            setTimeout(function () { bar.classList.add('animated'); }, 300);
+          });
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card').forEach(function (el) { observer.observe(el); });
+  }
+
+  function flattenStack(stack) {
+    if (!stack) return [];
+    return []
+      .concat(stack.frontend || [])
+      .concat(stack.backend || [])
+      .concat(stack.database || [])
+      .concat(stack.infra || [])
+      .concat(stack.otros || []);
+  }
+
+  // ── MODAL ──────────────────────────────────────────────────────────────────
+  function setupModal() {
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('modal-overlay').addEventListener('click', function (e) {
+      if (e.target === e.currentTarget) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function openModal(p) {
+    const content = document.getElementById('modal-content');
+    const roleHtml = p.role ? infoBox('Rol', p.role) : '';
+    const teamHtml = p.team ? infoBox('Equipo', p.team) : '';
+    const clientHtml = p.client ? infoBox('Cliente', p.client) : '';
+    const priorityHtml = p.priority ? infoBox('Prioridad', p.priority) : '';
+    const startHtml = p.startDate ? infoBox('Inicio', p.startDate) : '';
+    const endHtml = p.estimatedEnd ? infoBox('Cierre estimado', p.estimatedEnd) : '';
+
+    const infoHtml = [roleHtml, teamHtml, clientHtml, priorityHtml, startHtml, endHtml]
+      .filter(Boolean).join('');
+
+    // Carrusel
+    const images = p.images || [];
+    const carouselHtml = images.length > 0
+      ? buildCarousel(images, p.id)
+      : '<div class="no-images">Sin capturas disponibles</div>';
+
+    // Stack agrupado
+    const stackHtml = buildStackGrid(p.stack);
+
+    // Milestones
+    const milestonesHtml = (p.milestones || []).map(function (m) {
+      const cls = m.done ? 'done' : (m.wip ? 'wip' : 'pending');
+      const icon = m.done ? '✓' : (m.wip ? '◈' : '○');
+      return '<li class="' + cls + '"><span class="milestone-icon">' + icon + '</span>' + escapeHtml(m.label) + '</li>';
+    }).join('');
+
+    content.innerHTML =
+      '<div class="modal-tag">Proyecto · ' + escapeHtml(p.subtitle) + '</div>' +
+      '<h2 class="modal-title" id="modal-title">' + escapeHtml(p.title) + '</h2>' +
+      '<p class="modal-subtitle">ETA: ' + escapeHtml(p.eta) + ' · Progreso: ' + p.progress + '% · ' + escapeHtml(p.statusLabel) + '</p>' +
+
+      (images.length > 0 || true ? '<div class="modal-images">' + carouselHtml + '</div>' : '') +
+
+      '<div class="modal-section">' +
+        '<div class="modal-section-label">Información del proyecto</div>' +
+        '<div class="info-grid">' + infoHtml + '</div>' +
+      '</div>' +
+
+      '<div class="modal-section">' +
+        '<div class="modal-section-label">Descripción</div>' +
+        '<p class="modal-text">' + escapeHtml(p.desc) + '</p>' +
+      '</div>' +
+
+      '<div class="modal-section">' +
+        '<div class="modal-section-label">Estado actual</div>' +
+        '<p class="modal-text">' + escapeHtml(p.current || 'Sin información.') + '</p>' +
+      '</div>' +
+
+      '<div class="modal-section">' +
+        '<div class="modal-section-label">Pendiente</div>' +
+        '<p class="modal-text">' + escapeHtml(p.missing || 'Sin información.') + '</p>' +
+      '</div>' +
+
+      '<div class="modal-section">' +
+        '<div class="modal-section-label">Stack técnico</div>' +
+        stackHtml +
+      '</div>' +
+
+      (milestonesHtml ? '<div class="modal-section">' +
+        '<div class="modal-section-label">Hitos</div>' +
+        '<ul class="milestone-list">' + milestonesHtml + '</ul>' +
+      '</div>' : '') +
+
+      '<div class="progress-label" style="margin-top:2rem">' +
+        '<span>Progreso total</span>' +
+        '<span class="progress-pct">' + p.progress + '%</span>' +
+      '</div>' +
+      '<div class="progress-track">' +
+        '<div class="progress-fill" style="--w:' + p.progress + '%"></div>' +
+      '</div>';
+
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // Animar barra de progreso
+    setTimeout(function () {
+      content.querySelectorAll('.progress-fill').forEach(function (bar) {
+        bar.classList.add('animated');
+      });
+    }, 150);
+
+    // Inicializar carrusel si aplica
+    if (images.length > 0) initCarousel(p.id, images.length);
+  }
+
+  function infoBox(label, value) {
+    return '<div class="info-box"><div class="info-box-label">' + escapeHtml(label) + '</div><div class="info-box-value">' + escapeHtml(value) + '</div></div>';
+  }
+
+  function buildStackGrid(stack) {
+    if (!stack) return '<p class="modal-text">Sin información de stack.</p>';
+    const groups = [
+      { key: 'frontend', label: 'Frontend' },
+      { key: 'backend', label: 'Backend' },
+      { key: 'database', label: 'Base de datos' },
+      { key: 'infra', label: 'Infraestructura' },
+      { key: 'otros', label: 'Otros' }
+    ];
+    const html = groups
+      .filter(function (g) { return Array.isArray(stack[g.key]) && stack[g.key].length > 0; })
+      .map(function (g) {
+        const items = stack[g.key].map(function (it) {
+          return '<div class="stack-item">' + escapeHtml(it) + '</div>';
+        }).join('');
+        return '<div class="stack-group">' +
+          '<div class="stack-group-label">' + g.label + '</div>' +
+          '<div class="stack-group-items">' + items + '</div>' +
+        '</div>';
+      }).join('');
+    return '<div class="stack-grid">' + (html || '<p class="modal-text">Sin información de stack.</p>') + '</div>';
+  }
+
+  function buildCarousel(images, projectId) {
+    const slides = images.map(function (img, idx) {
+      return '<div class="carousel-slide">' +
+        '<img src="' + escapeAttr(img.src) + '" alt="' + escapeAttr(img.caption || '') + '" loading="lazy">' +
+        (img.caption ? '<div class="carousel-caption">' + escapeHtml(img.caption) + '</div>' : '') +
+      '</div>';
+    }).join('');
+
+    const dots = images.map(function (_, idx) {
+      return '<button class="carousel-dot' + (idx === 0 ? ' active' : '') + '" data-dot="' + idx + '" aria-label="Imagen ' + (idx + 1) + '"></button>';
+    }).join('');
+
+    const nav = images.length > 1
+      ? '<button class="carousel-btn carousel-prev" aria-label="Anterior">‹</button>' +
+        '<button class="carousel-btn carousel-next" aria-label="Siguiente">›</button>'
+      : '';
+
+    return '<div class="carousel" data-carousel="' + projectId + '">' +
+      '<div class="carousel-track">' + slides + '</div>' +
+      nav +
+    '</div>' +
+    (images.length > 1 ? '<div class="carousel-dots">' + dots + '</div>' : '');
+  }
+
+  function initCarousel(projectId, total) {
+    let current = 0;
+    const carousel = document.querySelector('[data-carousel="' + projectId + '"]');
+    if (!carousel) return;
+    const track = carousel.querySelector('.carousel-track');
+    const dots = document.querySelectorAll('.carousel-dot');
+
+    function go(i) {
+      current = (i + total) % total;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach(function (d, idx) { d.classList.toggle('active', idx === current); });
+    }
+
+    const prev = carousel.querySelector('.carousel-prev');
+    const next = carousel.querySelector('.carousel-next');
+    if (prev) prev.addEventListener('click', function () { go(current - 1); });
+    if (next) next.addEventListener('click', function () { go(current + 1); });
+
+    dots.forEach(function (d) {
+      d.addEventListener('click', function () { go(parseInt(d.dataset.dot, 10)); });
+    });
+  }
+
+  // ── HELPERS ────────────────────────────────────────────────────────────────
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function escapeAttr(str) {
+    return escapeHtml(str);
+  }
+
+  // ── CURSOR ─────────────────────────────────────────────────────────────────
+  function setupCursor() {
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) return; // móvil / táctil: usar cursor nativo
+
+    document.body.classList.add('custom-cursor');
+
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+
+    document.addEventListener('mousemove', function (e) {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      setTimeout(function () {
+        ring.style.left = e.clientX + 'px';
+        ring.style.top = e.clientY + 'px';
+      }, 80);
+    });
+
+    // Hover detection via event delegation
+    document.addEventListener('mouseover', function (e) {
+      if (e.target.closest('a, button, .card, .filter-btn')) {
+        document.body.classList.add('hover-target');
+      }
+    });
+    document.addEventListener('mouseout', function (e) {
+      if (e.target.closest('a, button, .card, .filter-btn')) {
+        document.body.classList.remove('hover-target');
+      }
+    });
+  }
+
+  // ── INTRO ──────────────────────────────────────────────────────────────────
+  let introDismissed = false;
+  function dismissIntro() {
+    if (introDismissed) return;
+    introDismissed = true;
+    const intro = document.getElementById('intro');
+    const main = document.getElementById('main');
+    intro.classList.add('exit');
+    setTimeout(function () {
+      intro.style.display = 'none';
+      main.classList.add('visible');
+      sessionStorage.setItem('introSeen', '1');
+      animateStats();
+    }, 800);
+  }
+
+  function runIntroSequence() {
+    // Skip intro si ya se mostró en la sesión
+    const seen = sessionStorage.getItem('introSeen');
+    const intro = document.getElementById('intro');
+    const main = document.getElementById('main');
+
+    if (seen) {
+      intro.style.display = 'none';
+      main.classList.add('visible');
+      animateStats();
+      return;
+    }
+
+    // Click / tecla para saltar la intro
+    intro.style.cursor = 'pointer';
+    intro.addEventListener('click', dismissIntro);
+    document.addEventListener('keydown', function onKey(e) {
+      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+        document.removeEventListener('keydown', onKey);
+        dismissIntro();
+      }
+    });
+
+    // Auto-dismiss después de la animación
+    setTimeout(dismissIntro, 2800);
+  }
+
+  function animateStats() {
+    setTimeout(function () {
+      const active = PROJECTS.filter(function (p) { return p.status === 'dev' || p.status === 'active'; }).length;
+      const done = PROJECTS.filter(function (p) { return p.status === 'active'; }).length;
+      animateCounter(document.getElementById('count-projects'), PROJECTS.length);
+      animateCounter(document.getElementById('count-active'), active);
+      animateCounter(document.getElementById('count-done'), done);
+    }, 400);
+  }
+
+  function animateCounter(el, target, duration) {
+    if (!el) return;
+    duration = duration || 1200;
+    let start = null;
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      el.textContent = Math.floor(progress * target);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+})();
+</script>
+
+</body>
+</html>

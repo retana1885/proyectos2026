@@ -1,0 +1,991 @@
+{
+  "meta": {
+    "owner": "J. PABLO RETANA L.",
+    "role": "Analista / Desarrollador de Sistemas",
+    "lastUpdate": "2026-04-17",
+    "location": "Cd. Guzmán, Jal."
+  },
+  "projects": [
+    {
+      "id": 1,
+      "slug": "factura-v2",
+      "title": "Sistema de Facturación CFDI v2",
+      "subtitle": "Full-Stack · Flask + PostgreSQL",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 85,
+      "eta": "2 semanas",
+      "priority": "baja",
+      "type": "Aplicación web",
+      "role": "Ayuda en implementación",
+      "team": "2 personas",
+      "client": "Personal de facturación/administración",
+      "startDate": "2026-03-18",
+      "estimatedEnd": "2026-04-30",
+      "desc": "Facturación CFDI automatizada para 19 sucursales de Grupo Canave vía Facturama API. En producción en DigitalOcean con Nginx + Gunicorn, acceso por Tailscale.",
+      "current": "Estabilización en producción: manejo de sesiones PostgreSQL, validación de límite SAT 72h y portal de auto-factura liberado.",
+      "missing": "Cobertura de pruebas automatizadas, capacitación a usuarios finales y features adicionales por confirmar.",
+      "stack": {
+        "frontend": [
+          "Jinja2",
+          "HTML5",
+          "JavaScript"
+        ],
+        "backend": [
+          "Flask 3.0",
+          "Python 3.12",
+          "Gunicorn",
+          "Flask-SQLAlchemy",
+          "Flask-Login",
+          "Alembic"
+        ],
+        "database": [
+          "PostgreSQL",
+          "SQL Server"
+        ],
+        "infra": [
+          "Ubuntu 24.04",
+          "DigitalOcean Droplet",
+          "Nginx",
+          "Tailscale",
+          "systemctl"
+        ],
+        "otros": [
+          "psycopg2-binary",
+          "pyodbc",
+          "Facturama API",
+          "Fernet/AES-256",
+          "Flask-WTF"
+        ]
+      },
+      "images": [
+        {
+          "src": "images/factura-v2-1.jpg",
+          "caption": "Dashboard de facturación CFDI"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Autenticación y gestión de roles",
+          "done": true
+        },
+        {
+          "label": "Generación batch de CFDIs (Corte Z, Lote, Tickets)",
+          "done": true
+        },
+        {
+          "label": "Portal de auto-factura para clientes",
+          "done": true
+        },
+        {
+          "label": "Despliegue en producción (Droplet + Nginx)",
+          "done": true
+        },
+        {
+          "label": "Pruebas automatizadas y cobertura",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Capacitación a usuarios finales",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "canaveia-ollama",
+      "title": "Canave IA — Asistente BI",
+      "subtitle": "Full-Stack · FastAPI + Streamlit",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 75,
+      "eta": "2.5 meses",
+      "priority": "alta",
+      "type": "Aplicación web",
+      "role": "Desarrollador full stack",
+      "team": "2 personas",
+      "client": "Dirección, compras, supervisión y administración",
+      "startDate": "2026-04-06",
+      "estimatedEnd": "2026-06-30",
+      "desc": "Asistente de Business Intelligence con lenguaje natural para Grupo Canave. 42 plantillas SQL certificadas sobre datos de ventas e inventario, sin riesgo de modificación.",
+      "current": "42 plantillas SQL operando, suite de 102 tests pasando, dashboard de KPIs con alertas proactivas en uso activo.",
+      "missing": "Confirmar backlog de features pendientes y nuevas plantillas SQL según necesidades del negocio.",
+      "stack": {
+        "frontend": [
+          "Streamlit"
+        ],
+        "backend": [
+          "FastAPI",
+          "Python 3.9+",
+          "Uvicorn"
+        ],
+        "database": [
+          "SQL Server (NOVACAJA5)",
+          "SQL Server (ControlStock)"
+        ],
+        "infra": [
+          "Tailscale",
+          "scripts .bat"
+        ],
+        "otros": [
+          "pandas",
+          "plotly",
+          "sentence-transformers",
+          "pyodbc",
+          "sqlparse",
+          "openpyxl",
+          "Ollama",
+          "pytest"
+        ]
+      },
+      "images": [
+        {
+          "src": "images/canaveia-ollama-1.jpg",
+          "caption": "Asistente BI — Canave IA"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Autenticación SHA-256 + pantalla de intro",
+          "done": true
+        },
+        {
+          "label": "42 plantillas SQL certificadas",
+          "done": true
+        },
+        {
+          "label": "Dashboard de KPIs y alertas proactivas",
+          "done": true
+        },
+        {
+          "label": "Suite de 102 pruebas automatizadas",
+          "done": true
+        },
+        {
+          "label": "Integración con Ollama (LLM local)",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Backlog de features adicionales",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "inventarios",
+      "title": "Sistema de Inventario Físico",
+      "subtitle": "Full-Stack · JavaScript + FastAPI",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 80,
+      "eta": "3 semanas",
+      "priority": "baja",
+      "type": "Aplicación web",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Encargado y personal de almacén central",
+      "startDate": "2026-03-15",
+      "estimatedEnd": "2026-05-04",
+      "desc": "App web para conteo físico de inventario por filas de almacén (F1–F8). Opera en modo local sin red o en modo compartido con sincronización en tiempo real entre operadores.",
+      "current": "Sistema funcional en ambos modos con exportación a Excel, auto-guardado y seguimiento por operador.",
+      "missing": "Integración directa con SQL Server para importar existencias y definir features adicionales del backlog.",
+      "stack": {
+        "frontend": [
+          "HTML5",
+          "JavaScript (vanilla)",
+          "localStorage"
+        ],
+        "backend": [
+          "FastAPI",
+          "Uvicorn",
+          "Python",
+          "SQLAlchemy",
+          "pyodbc"
+        ],
+        "database": [
+          "SQL Server",
+          "localStorage"
+        ],
+        "infra": [
+          "Scripts .bat (Windows)"
+        ],
+        "otros": [
+          "python-dotenv",
+          "openpyxl"
+        ]
+      },
+      "images": [
+        {
+          "src": "images/inventarios-1.jpg",
+          "caption": "Sistema de conteo físico de inventario"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Frontend de conteo (modo local)",
+          "done": true
+        },
+        {
+          "label": "Importación Excel por drag & drop",
+          "done": true
+        },
+        {
+          "label": "Exportación a Excel con plantilla",
+          "done": true
+        },
+        {
+          "label": "Backend FastAPI + modo multi-operador",
+          "done": true
+        },
+        {
+          "label": "Importación directa desde SQL Server",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Features adicionales del backlog",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "resurtido-app",
+      "title": "Dashboard de Resurtido de Stock",
+      "subtitle": "Full-Stack · Flask + SQL Server",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 80,
+      "eta": "5 semanas",
+      "priority": "baja",
+      "type": "Aplicación web",
+      "role": "Desarrollador",
+      "team": "1 persona",
+      "client": "Distribución y compras",
+      "startDate": "2026-04-06",
+      "estimatedEnd": "2026-05-31",
+      "desc": "Réplica web del reporte Power BI Resurtido_V2 con datos en tiempo real desde SQL Server. Calcula faltantes de stock según ventas históricas y parámetros ajustables.",
+      "current": "Dashboard funcional con sliders de parámetros, filtros por sucursal/producto y exportación CSV.",
+      "missing": "Optimización de queries SQL pesadas y definir si se despliega en servidor compartido o se mantiene local.",
+      "stack": {
+        "frontend": [
+          "HTML5",
+          "CSS",
+          "JavaScript"
+        ],
+        "backend": [
+          "Flask 3.1.0",
+          "Python 3.9+",
+          "flask-cors"
+        ],
+        "database": [
+          "SQL Server (NOVACAJA5)",
+          "SQL Server (ControlStock)"
+        ],
+        "infra": [
+          "Tailscale",
+          "ODBC Driver 17 for SQL Server"
+        ],
+        "otros": [
+          "pyodbc",
+          "pandas",
+          "python-dotenv"
+        ]
+      },
+      "images": [
+        {
+          "src": "images/resurtido-app-1.jpg",
+          "caption": "Dashboard de resurtido de stock"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Réplica del modelo de datos Power BI",
+          "done": true
+        },
+        {
+          "label": "Sliders de parámetros interactivos",
+          "done": true
+        },
+        {
+          "label": "Filtros por sucursal y producto",
+          "done": true
+        },
+        {
+          "label": "Exportación a CSV",
+          "done": true
+        },
+        {
+          "label": "Optimización de queries SQL",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Despliegue en servidor compartido",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "asistente-medico",
+      "title": "Consultor PLM — Asistente Médico",
+      "subtitle": "Frontend · JavaScript estático",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 70,
+      "eta": "6 semanas",
+      "priority": "media",
+      "type": "Aplicación web",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Personal de ventas en sucursales",
+      "startDate": "2026-03-12",
+      "estimatedEnd": "2026-05-31",
+      "desc": "Consultora web de base de datos PLM para uso en mostrador de farmacia. Fichas técnicas completas de medicamentos con respuestas determinísticas locales, sin LLM ni backend.",
+      "current": "App publicada en GitHub Pages con base PLM activa, índice de imágenes y modos rápido/completo funcionando.",
+      "missing": "Ampliar base PLM con medicamentos pendientes y fragmentar archivos grandes que exceden el límite de GitHub.",
+      "stack": {
+        "frontend": [
+          "HTML5",
+          "JavaScript (vanilla)"
+        ],
+        "backend": [],
+        "database": [
+          "JSON local (plm_data.json)",
+          "Markdown por producto"
+        ],
+        "infra": [
+          "GitHub Pages"
+        ],
+        "otros": []
+      },
+      "images": [
+        {
+          "src": "images/asistente-medico-1.jpg",
+          "caption": "Consultor PLM — Asistente Médico"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Base PLM inicial estructurada en JSON",
+          "done": true
+        },
+        {
+          "label": "Búsqueda y fichas técnicas completas",
+          "done": true
+        },
+        {
+          "label": "Publicación en GitHub Pages",
+          "done": true
+        },
+        {
+          "label": "Índice de imágenes por producto",
+          "done": true
+        },
+        {
+          "label": "Expansión de base PLM (medicamentos pendientes)",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Fragmentar archivos grandes para GitHub",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "crypto-bot",
+      "title": "CryptoBot — Polymarket Trading Bot",
+      "subtitle": "Backend · Python + Web3 + Redis",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 50,
+      "eta": "14 semanas",
+      "priority": "baja",
+      "type": "Bot / Backend",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Sistemas",
+      "startDate": "2026-04-15",
+      "estimatedEnd": "2026-07-31",
+      "desc": "Bot de copy-trading para Polymarket con dashboard terminal TUI, servidor WebSocket, integración blockchain vía Web3 y alertas en tiempo real por Telegram.",
+      "current": "Arquitectura definida e implementada: core trading, caché Redis, API WebSocket y notificaciones Telegram.",
+      "missing": "Avance real pendiente de revisión — completar backlog y validar en operación real.",
+      "stack": {
+        "frontend": [
+          "Textual (TUI)",
+          "Rich"
+        ],
+        "backend": [
+          "Python",
+          "FastAPI",
+          "Uvicorn",
+          "aiohttp",
+          "websockets"
+        ],
+        "database": [
+          "Redis"
+        ],
+        "infra": [
+          "python-dotenv"
+        ],
+        "otros": [
+          "py-clob-client",
+          "web3",
+          "eth-account",
+          "python-telegram-bot",
+          "pydantic",
+          "loguru",
+          "pytest"
+        ]
+      },
+      "images": [],
+      "milestones": [
+        {
+          "label": "Integración con CLOB de Polymarket",
+          "done": true
+        },
+        {
+          "label": "Caché de datos de mercado con Redis",
+          "done": true
+        },
+        {
+          "label": "Dashboard TUI con Textual",
+          "done": true
+        },
+        {
+          "label": "Alertas por Telegram",
+          "done": true
+        },
+        {
+          "label": "Servidor WebSocket para integración externa",
+          "done": false,
+          "wip": true
+        },
+        {
+          "label": "Testing y estabilización en producción real",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "slug": "buscador-posiciones",
+      "title": "Buscador de Posiciones en Almacén",
+      "subtitle": "Frontend · JavaScript estático",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 95,
+      "eta": "En vivo",
+      "priority": "alta",
+      "type": "Aplicación web",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Personal de almacén",
+      "startDate": "2026-02-01",
+      "estimatedEnd": null,
+      "desc": "Buscador web estático para localizar productos en almacén por código de barras, código o nombre. Funciona desde móvil con escáner, desplegado en GitHub Pages.",
+      "current": "En producción en GitHub Pages. Búsqueda por código, nombre y posición con modo escáner activo.",
+      "missing": "Mejoras de UX o funcionalidades adicionales por definir.",
+      "stack": {
+        "frontend": [
+          "HTML5",
+          "JavaScript (vanilla)"
+        ],
+        "backend": [],
+        "database": [
+          "Excel (.xlsx)"
+        ],
+        "infra": [
+          "GitHub Pages"
+        ],
+        "otros": []
+      },
+      "images": [
+        {
+          "src": "images/buscador-posiciones-1.jpg",
+          "caption": "Buscador de posiciones en almacén"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Carga y parseo de Excel de posiciones",
+          "done": true
+        },
+        {
+          "label": "Búsqueda por código de barras y nombre",
+          "done": true
+        },
+        {
+          "label": "Modo escáner para dispositivos móviles",
+          "done": true
+        },
+        {
+          "label": "Publicación en GitHub Pages",
+          "done": true
+        },
+        {
+          "label": "Mejoras de UX adicionales (REVISAR)",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "slug": "armado-de-pedidos-v2",
+      "title": "Armado de Pedidos v2",
+      "subtitle": "Escritorio · Python + tkinter",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 90,
+      "eta": "En vivo",
+      "priority": "baja",
+      "type": "Aplicación de escritorio",
+      "role": "Mejora de proyecto",
+      "team": "1 persona",
+      "client": "Personal de distribución",
+      "startDate": "2026-03-30",
+      "estimatedEnd": null,
+      "desc": "App de escritorio para armado de pedidos en almacén de farmacia. Carga Excel por drag & drop y genera archivos separados por fila de almacén para el picking físico.",
+      "current": "v2.2 compilada y distribuida como .exe standalone con drag & drop y modo oscuro. En uso en almacén.",
+      "missing": "Confirmar si hay features pendientes para versión siguiente.",
+      "stack": {
+        "frontend": [
+          "tkinter",
+          "tkinterdnd2"
+        ],
+        "backend": [
+          "Python 3.11+"
+        ],
+        "database": [],
+        "infra": [
+          "PyInstaller"
+        ],
+        "otros": [
+          "pandas",
+          "openpyxl",
+          "Pillow"
+        ]
+      },
+      "images": [
+        {
+          "src": "images/armado-de-pedidos-v2-1.jpg",
+          "caption": "Armado de pedidos por fila — v2.2"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Carga de Excel por drag & drop",
+          "done": true
+        },
+        {
+          "label": "Generación de archivos por fila de almacén",
+          "done": true
+        },
+        {
+          "label": "Interfaz con modo oscuro",
+          "done": true
+        },
+        {
+          "label": "Configuración persistente (JSON)",
+          "done": true
+        },
+        {
+          "label": "Compilación como .exe standalone — v2.2",
+          "done": true
+        },
+        {
+          "label": "Features adicionales v2.3 (REVISAR)",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "slug": "experto-novacaja",
+      "title": "Experto NovaCaja — Asistente RAG",
+      "subtitle": "Escritorio · Flask + RAG local",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 95,
+      "eta": "En vivo",
+      "priority": "media",
+      "type": "Aplicación de escritorio",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Personal de IT y soporte",
+      "startDate": null,
+      "estimatedEnd": null,
+      "desc": "Asistente experto de NovaCaja con RAG local distribuido como .exe standalone. Consultas en lenguaje natural sobre el sistema NovaCaja sin internet ni APIs externas.",
+      "current": "v1.0 compilada con base de conocimiento completa (1.3 MB Markdown + 1.5 MB índice semántico), lista para distribución.",
+      "missing": "Actualizar base de conocimiento si NovaCaja modifica su documentación.",
+      "stack": {
+        "frontend": [
+          "HTML5 (vía Flask)"
+        ],
+        "backend": [
+          "Flask",
+          "Python"
+        ],
+        "database": [
+          "Markdown (1.3 MB)",
+          "JSON semántico (1.5 MB)"
+        ],
+        "infra": [
+          "PyInstaller"
+        ],
+        "otros": []
+      },
+      "images": [
+        {
+          "src": "images/experto-novacaja-1.jpg",
+          "caption": "Experto NovaCaja — Asistente RAG"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Extracción de base de conocimiento (crawler)",
+          "done": true
+        },
+        {
+          "label": "Índice semántico JSON para búsqueda RAG",
+          "done": true
+        },
+        {
+          "label": "Motor RAG + interfaz Flask local",
+          "done": true
+        },
+        {
+          "label": "Compilación como .exe standalone — v1.0",
+          "done": true
+        },
+        {
+          "label": "Actualización de base de conocimiento",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "slug": "monitor-recursos",
+      "title": "Monitor de Recursos del Sistema",
+      "subtitle": "Escritorio · Python + psutil",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 95,
+      "eta": "En vivo",
+      "priority": "baja",
+      "type": "Aplicación de escritorio",
+      "role": "Desarrollador",
+      "team": "Solo",
+      "client": "Uso personal / diagnóstico",
+      "startDate": "2026-04-06",
+      "estimatedEnd": null,
+      "desc": "Ventana flotante estilo macOS para monitorear CPU, RAM, disco y red en Windows. Muy ligera (~20 MB RAM, <1% CPU), con gráfica de historial y temas claro/oscuro.",
+      "current": "v2.0 compilada con anillos visuales, historial de 60s, top procesos y soporte de temas. En uso diario.",
+      "missing": "Sin mejoras planificadas — herramienta completa para su propósito.",
+      "stack": {
+        "frontend": [
+          "tkinter"
+        ],
+        "backend": [
+          "Python"
+        ],
+        "database": [],
+        "infra": [
+          "PyInstaller"
+        ],
+        "otros": [
+          "psutil"
+        ]
+      },
+      "images": [
+        {
+          "src": "images/monitor-recursos-1.jpg",
+          "caption": "Monitor de recursos del sistema — v2.0"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Monitor básico CPU y RAM (v1)",
+          "done": true
+        },
+        {
+          "label": "Anillos visuales y gráfica de historial (v2)",
+          "done": true
+        },
+        {
+          "label": "Top 7 procesos por uso de CPU",
+          "done": true
+        },
+        {
+          "label": "Temas claro y oscuro",
+          "done": true
+        },
+        {
+          "label": "Compilación como .exe standalone — v2.0",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "slug": "crawler-novacaja",
+      "title": "Crawler de Documentación NovaCaja",
+      "subtitle": "Scraping · Python + BeautifulSoup",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 100,
+      "eta": "En vivo",
+      "priority": "baja",
+      "type": "Herramienta CLI",
+      "role": "Desarrollador",
+      "team": "1 persona",
+      "client": "Uso en servidor",
+      "startDate": "2026-04-13",
+      "estimatedEnd": null,
+      "desc": "Web scraper que extrae y estructura la documentación técnica del portal NovaCaja para RAG. Genera Markdown, índice JSON semántico y chunks JSONL para embeddings.",
+      "current": "Extracción completa finalizada en múltiples versiones. Scraper PLM complementario incluido.",
+      "missing": "Re-ejecutar si NovaCaja actualiza su documentación.",
+      "stack": {
+        "frontend": [],
+        "backend": [
+          "Python"
+        ],
+        "database": [],
+        "infra": [],
+        "otros": [
+          "requests",
+          "BeautifulSoup4",
+          "lxml"
+        ]
+      },
+      "images": [
+        {
+          "src": "images/crawler-novacaja-1.jpg",
+          "caption": "Crawler de documentación NovaCaja"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Auto-login y descubrimiento de páginas",
+          "done": true
+        },
+        {
+          "label": "Generación de Markdown estructurado",
+          "done": true
+        },
+        {
+          "label": "Índice JSON semántico para RAG",
+          "done": true
+        },
+        {
+          "label": "Chunks JSONL para embeddings",
+          "done": true
+        },
+        {
+          "label": "Scraper PLM complementario",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "slug": "prueba-teclado",
+      "title": "Probador de Teclado",
+      "subtitle": "Utilidad · Python + tkinter",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 100,
+      "eta": "En vivo",
+      "priority": "baja",
+      "type": "Herramienta de escritorio",
+      "role": "Desarrollador",
+      "team": "Solo",
+      "client": "Uso interno / diagnóstico de hardware",
+      "startDate": "2026-04-16",
+      "estimatedEnd": null,
+      "desc": "Utilidad de escritorio para verificar qué teclas funcionan en un teclado físico. Muestra un layout visual marcando teclas detectadas (verde) y no detectadas (rojo).",
+      "current": "v1.0 compilada y funcional como ejecutable standalone.",
+      "missing": "Sin mejoras planificadas — utilidad completa para su propósito.",
+      "stack": {
+        "frontend": [
+          "tkinter"
+        ],
+        "backend": [
+          "Python"
+        ],
+        "database": [],
+        "infra": [
+          "PyInstaller"
+        ],
+        "otros": []
+      },
+      "images": [
+        {
+          "src": "images/prueba-teclado-1.jpg",
+          "caption": "Probador de teclado — v1.0"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Layout visual del teclado completo",
+          "done": true
+        },
+        {
+          "label": "Detección en tiempo real de teclas",
+          "done": true
+        },
+        {
+          "label": "Reporte de teclas no detectadas",
+          "done": true
+        },
+        {
+          "label": "Compilación como .exe standalone — v1.0",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "slug": "facturacion-legacy",
+      "title": "Sistema de Facturación v1 (Legacy)",
+      "subtitle": "Full-Stack · Flask + SQL Server",
+      "status": "paused",
+      "statusLabel": "Pausado",
+      "progress": 100,
+      "eta": "En espera",
+      "priority": "baja",
+      "type": "Aplicación web",
+      "role": "Soporte",
+      "team": "2 personas",
+      "client": "Admon y facturación",
+      "startDate": "2024-10-17",
+      "estimatedEnd": null,
+      "desc": "Primera versión del sistema de facturación CFDI para Grupo Canave. Reemplazada por factura-v2 en marzo 2026. Mantenida como referencia histórica del proceso de migración.",
+      "current": "Proyecto pausado — reemplazado por factura-v2 con arquitectura más robusta (PostgreSQL, Alembic, seguridad reforzada).",
+      "missing": "No aplica — reemplazado activamente por factura-v2.",
+      "stack": {
+        "frontend": [
+          "Jinja2",
+          "HTML5"
+        ],
+        "backend": [
+          "Flask 3.0.3",
+          "Python",
+          "Flask-SQLAlchemy"
+        ],
+        "database": [
+          "SQL Server"
+        ],
+        "infra": [],
+        "otros": []
+      },
+      "images": [
+        {
+          "src": "images/facturacion-legacy-1.jpg",
+          "caption": "Sistema de facturación v1 (Legacy)"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Generación de CFDIs vía Facturama API",
+          "done": true
+        },
+        {
+          "label": "Gestión de Cortes Z y tickets",
+          "done": true
+        },
+        {
+          "label": "CRUD de clientes receptores",
+          "done": true
+        },
+        {
+          "label": "Registro de auditoría por usuario",
+          "done": true
+        },
+        {
+          "label": "Reemplazado por factura-v2",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "slug": "consolidador-hojas-pedido",
+      "title": "Consolidador de Hojas de Pedido",
+      "subtitle": "Escritorio · Python + tkinter",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 95,
+      "eta": "En vivo",
+      "priority": "media",
+      "type": "Aplicación de escritorio",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Personal de distribución y almacén",
+      "startDate": "2025-12-30",
+      "estimatedEnd": null,
+      "desc": "App de escritorio que consolida traspasos de bodega a sucursales desde NovaCaja y genera hojas Excel apiladas con plantillas externas por destino (GENERAL, COLIMA, MANZANILLO, TECOMAN).",
+      "current": "v1.0 compilada como .exe standalone con tema oscuro y claro. Plantillas Excel externas editables sin recompilar.",
+      "missing": "Confirmar si se necesitan plantillas para sucursales adicionales.",
+      "stack": {
+        "frontend": [
+          "tkinter",
+          "ttk"
+        ],
+        "backend": [
+          "Python"
+        ],
+        "database": [
+          "SQL Server (NOVACAJA5)"
+        ],
+        "infra": [
+          "PyInstaller",
+          "Tailscale"
+        ],
+        "otros": [
+          "pyodbc",
+          "openpyxl"
+        ]
+      },
+      "images": [
+        {
+          "src": "images/consolidador-hojas-pedido-1.jpg",
+          "caption": "Consolidador de hojas de pedido a sucursales"
+        }
+      ],
+      "milestones": [
+        {
+          "label": "Consulta de traspasos desde SQL Server",
+          "done": true
+        },
+        {
+          "label": "Selección interactiva de notas (Treeview doble)",
+          "done": true
+        },
+        {
+          "label": "Plantillas Excel externas por destino (4 sucursales)",
+          "done": true
+        },
+        {
+          "label": "Tema oscuro y tema claro",
+          "done": true
+        },
+        {
+          "label": "Compilación como .exe standalone",
+          "done": true
+        },
+        {
+          "label": "Plantillas adicionales por sucursal (REVISAR)",
+          "done": false
+        }
+      ]
+    }
+  ]
+}

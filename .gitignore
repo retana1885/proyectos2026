@@ -1,0 +1,15 @@
+# Documentación interna — IPs y notas de infraestructura
+*.portfolio.md
+
+# Herramientas locales de mantenimiento
+*.bat
+actualizar_datos.py
+PROMPT_NUEVO_PROYECTO.md
+
+# Imagen de documentación interna
+Como realizar actualizacion y cambios.jpg
+
+# Archivos de sistema
+Thumbs.db
+desktop.ini
+.DS_Store
