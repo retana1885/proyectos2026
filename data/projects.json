@@ -2,7 +2,7 @@
   "meta": {
     "owner": "J. PABLO RETANA L.",
     "role": "Analista / Desarrollador de Sistemas",
-    "lastUpdate": "2026-04-17",
+    "lastUpdate": "2026-04-20",
     "location": "Cd. Guzmán, Jal."
   },
   "projects": [
@@ -985,6 +985,49 @@
           "label": "Plantillas adicionales por sucursal (REVISAR)",
           "done": false
         }
+      ]
+    },
+    {
+      "id": 15,
+      "slug": "turnos-consultorios-medicos",
+      "title": "Sistema de Turnos Médicos",
+      "subtitle": "Escritorio · Python + tkinter + SQL Server",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 90,
+      "eta": "En vivo",
+      "priority": "media",
+      "type": "Aplicación de escritorio",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Consultorios médicos / Farmacias",
+      "startDate": "2026-01-01",
+      "estimatedEnd": null,
+      "desc": "App de escritorio para gestión de turnos en consultorios médicos. Registro de pacientes, citas con múltiples servicios, historial clínico, corte de caja con PDF, recetas médicas y soporte multi-sucursal.",
+      "current": "Sistema completo en producción: turnos, módulo médico, corte de caja con PDF, recetas desde catálogo externo (NOVACAJA5), usuarios con roles y auditoría.",
+      "missing": "Tiempo de espera estimado en UI/tickets. Pulido de pantallas administrativas.",
+      "stack": {
+        "frontend": ["tkinter", "tkcalendar", "ttk"],
+        "backend": ["Python 3.8+"],
+        "database": ["SQL Server", "ODBC Driver 17"],
+        "infra": ["pyodbc"],
+        "otros": ["ReportLab", "openpyxl", "python-dateutil"]
+      },
+      "images": [
+        {
+          "src": "images/turnos-consultorios-medicos-1.jpg",
+          "caption": "Sistema de Turnos Médicos — Registro de turno"
+        }
+      ],
+      "milestones": [
+        { "label": "Registro de pacientes y turnos multi-servicio", "done": true },
+        { "label": "Módulo médico con historial clínico", "done": true },
+        { "label": "Corte de caja con PDF térmico (80mm)", "done": true },
+        { "label": "Recetas médicas con catálogo NOVACAJA5", "done": true },
+        { "label": "Usuarios con roles y auditoría completa", "done": true },
+        { "label": "Soporte multi-sucursal con numeración por sucursal", "done": true },
+        { "label": "Tiempo de espera estimado en UI/tickets", "done": false },
+        { "label": "Pulido de pantallas administrativas", "done": false, "wip": true }
       ]
     }
   ]
