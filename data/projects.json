@@ -2,7 +2,7 @@
   "meta": {
     "owner": "J. PABLO RETANA L.",
     "role": "Analista / Desarrollador de Sistemas",
-    "lastUpdate": "2026-04-20",
+    "lastUpdate": "2026-04-30",
     "location": "Cd. Guzmán, Jal."
   },
   "projects": [
@@ -1028,6 +1028,48 @@
         { "label": "Soporte multi-sucursal con numeración por sucursal", "done": true },
         { "label": "Tiempo de espera estimado en UI/tickets", "done": false },
         { "label": "Pulido de pantallas administrativas", "done": false, "wip": true }
+      ]
+    },
+    {
+      "id": 16,
+      "slug": "zonificacion-sancamilo",
+      "title": "Optimizador de Zonificación Territorial",
+      "subtitle": "Web · Vanilla JS + Leaflet + OSRM",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 95,
+      "eta": "En vivo",
+      "priority": "alta",
+      "type": "Aplicación web (SPA)",
+      "role": "Desarrollador full stack",
+      "team": "1 persona",
+      "client": "Cadena regional de farmacias (interno)",
+      "startDate": "2026-04-30",
+      "estimatedEnd": null,
+      "desc": "Herramienta de rebalanceo óptimo de zonas de supervisión: asigna N puntos operativos a M supervisoras minimizando distancia real por carretera (OSRM), respetando carga, continuidad histórica y balance. Mapa interactivo, simulación de escenarios e import/export Excel.",
+      "current": "App en producción tras Basic Auth: matriz OSRM 22×22 con caché en localStorage, algoritmo greedy + swap optimization (50 iter), scoring multicriterio de 4 factores ponderados, métricas globales y por supervisora, escenarios guardados, import/export Excel (4 hojas) y bases arrastrables en mapa.",
+      "missing": "Heurística adicional para asignación dinámica de vehículo. Vista comparativa de escenarios lado a lado.",
+      "stack": {
+        "frontend": ["HTML5", "JavaScript (vanilla)", "CSS3 custom", "Leaflet"],
+        "backend": ["Cloudflare Workers"],
+        "database": ["localStorage", "JSON local"],
+        "infra": ["Cloudflare Pages"],
+        "otros": ["OSRM", "SheetJS", "Lucide", "OpenStreetMap"]
+      },
+      "images": [
+        {
+          "src": "images/zonificacion-sancamilo-1.jpg",
+          "caption": "Optimizador de zonificación — vista de mapa y métricas"
+        }
+      ],
+      "milestones": [
+        { "label": "Mapa interactivo con Leaflet + tiles CartoDB Dark", "done": true },
+        { "label": "Matriz de distancias reales OSRM con caché localStorage", "done": true },
+        { "label": "Algoritmo greedy + swap optimization (4 factores ponderados)", "done": true },
+        { "label": "Métricas comparativas globales y por supervisora", "done": true },
+        { "label": "Escenarios guardados (save/load/rename) + import/export Excel", "done": true },
+        { "label": "Despliegue Cloudflare Pages con Basic Auth", "done": true },
+        { "label": "Vista comparativa de escenarios lado a lado", "done": false }
       ]
     }
   ]

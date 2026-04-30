@@ -20,7 +20,7 @@ python -m http.server 8000
 
 ## Proyectos incluidos
 
-14 proyectos de desarrollo: aplicaciones web, herramientas de escritorio, bots, scrapers y dashboards construidos con Python, Flask, FastAPI, JavaScript y más.
+16 proyectos de desarrollo: aplicaciones web, herramientas de escritorio, bots, scrapers y dashboards construidos con Python, Flask, FastAPI, JavaScript y más.
 
 ## Seguridad y privacidad
 
