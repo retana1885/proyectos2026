@@ -2,7 +2,7 @@
   "meta": {
     "owner": "J. PABLO RETANA L.",
     "role": "Analista / Desarrollador de Sistemas",
-    "lastUpdate": "2026-04-30",
+    "lastUpdate": "2026-05-06",
     "location": "Cd. Guzmán, Jal."
   },
   "projects": [
@@ -1070,6 +1070,61 @@
         { "label": "Escenarios guardados (save/load/rename) + import/export Excel", "done": true },
         { "label": "Despliegue Cloudflare Pages con Basic Auth", "done": true },
         { "label": "Vista comparativa de escenarios lado a lado", "done": false }
+      ]
+    },
+    {
+      "id": 17,
+      "slug": "controlstock-cierre-diario",
+      "title": "ControlStock — Saneamiento del Cierre Diario",
+      "subtitle": "Saneamiento de datos · T-SQL + PowerShell + Task Scheduler",
+      "status": "active",
+      "statusLabel": "Producción",
+      "progress": 95,
+      "eta": "En vivo",
+      "priority": "alta",
+      "type": "Saneamiento de datos y automatización",
+      "role": "Diagnóstico, recovery y automatización",
+      "team": "1 persona",
+      "client": "Inventario / Almacén central y distribución",
+      "startDate": "2026-05-06",
+      "estimatedEnd": null,
+      "desc": "Diagnóstico y rescate de un sistema de cierres diarios de inventario que llevaba ~4 meses fallando silenciosamente. Limpieza de 26,896 filas corruptas en transacciones con backup, backfill de ~1.7M filas y automatización a 9:30 AM diaria.",
+      "current": "Sistema operando normalmente con tarea programada autónoma. 19/19 tiendas activas al día.",
+      "missing": "Confirmar primera ejecución automática (7/may). Eliminar tablas de backup tras 30-60 días de operación estable.",
+      "stack": {
+        "frontend": [],
+        "backend": [
+          "T-SQL",
+          "PowerShell"
+        ],
+        "database": [
+          "SQL Server 2022 Standard (NOVACAJA5)",
+          "SQL Server 2022 Standard (ControlStock)"
+        ],
+        "infra": [
+          "Tailscale",
+          "Windows Task Scheduler",
+          "ODBC Driver 17 for SQL Server"
+        ],
+        "otros": [
+          "sqlcmd",
+          "AnyDesk / RDP"
+        ]
+      },
+      "images": [
+        {
+          "src": "images/Cierre-diario-de-inventario-1.jpg",
+          "caption": "Cierre diario de inventario — Monitor visual"
+        }
+      ],
+      "milestones": [
+        { "label": "Diagnóstico contra BD productiva (12/19 tiendas atascadas)", "done": true },
+        { "label": "Identificación del patrón de basura (26,896 filas con timestamp 00:00:00)", "done": true },
+        { "label": "Cleanup transaccional en 3 etapas con backups automáticos", "done": true },
+        { "label": "Backfill de 4 meses por motor original (~1.7M filas, 12 tiendas)", "done": true },
+        { "label": "Tarea programada diaria a 9:30 AM creada y probada", "done": true },
+        { "label": "Confirmar primera ejecución automática (7/may/2026)", "done": false, "wip": true },
+        { "label": "Eliminar tablas de backup tras operación estable", "done": false }
       ]
     }
   ]
