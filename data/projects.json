@@ -2,7 +2,7 @@
   "meta": {
     "owner": "J. PABLO RETANA L.",
     "role": "Analista / Desarrollador de Sistemas",
-    "lastUpdate": "2026-05-06",
+    "lastUpdate": "2026-05-26",
     "location": "Cd. Guzmán, Jal."
   },
   "projects": [
@@ -1125,6 +1125,68 @@
         { "label": "Tarea programada diaria a 9:30 AM creada y probada", "done": true },
         { "label": "Confirmar primera ejecución automática (7/may/2026)", "done": false, "wip": true },
         { "label": "Eliminar tablas de backup tras operación estable", "done": false }
+      ]
+    },
+    {
+      "id": 18,
+      "slug": "abaco",
+      "title": "ABACO — Política de Inventario Basada en Decisión",
+      "subtitle": "Data app · Python + Streamlit + SQL Server",
+      "status": "dev",
+      "statusLabel": "En Desarrollo",
+      "progress": 85,
+      "eta": "REVISAR",
+      "priority": "alta",
+      "type": "Sistema de soporte a decisiones",
+      "role": "Desarrollador principal / Diseño del modelo",
+      "team": "1 persona",
+      "client": "Cadena regional de farmacias (compras, distribución y dirección)",
+      "startDate": "2026-04-15",
+      "estimatedEnd": "REVISAR",
+      "desc": "Sugerencia diaria de compra y rebalanceo de inventario por SKU × sucursal usando política base-stock (newsvendor) y demanda intermitente, no forecast puntual.",
+      "current": "Dashboard Streamlit con 5 vistas operativo. Módulo de rebalanceo completo (Fases 1–6): clusters geográficos, tour direccional, devoluciones a CEDIS y match heurístico contra POS.",
+      "missing": "Smoke E2E con datos --live, validación con el comprador y documentación final (CLAUDE.md + lecciones temporales L-S9-*).",
+      "stack": {
+        "frontend": ["Streamlit"],
+        "backend": [
+          "Python 3.11+",
+          "pandas",
+          "scipy",
+          "SQLAlchemy"
+        ],
+        "database": [
+          "SQL Server (POS, solo lectura)",
+          "SQL Server (BD de integración)",
+          "Parquet (caché local)"
+        ],
+        "infra": [
+          "Tailscale",
+          "Windows Task Scheduler",
+          "ODBC Driver 17 for SQL Server"
+        ],
+        "otros": [
+          "pyodbc",
+          "pyarrow",
+          "openpyxl",
+          "OSRM",
+          "feed CRE (precios combustible)"
+        ]
+      },
+      "images": [
+        {
+          "src": "images/abaco-1.jpg",
+          "caption": "ABACO — Dashboard de sugerencias de inventario"
+        }
+      ],
+      "milestones": [
+        { "label": "Política base-stock empírica + lead time LT2 + newsvendor con ROI cap", "done": true },
+        { "label": "Backtest walk-forward semanal con métricas finales (fill rate, quiebres, capital)", "done": true },
+        { "label": "Integración bilateral con sistema de órdenes vía BD compartida", "done": true },
+        { "label": "Módulo de rebalanceo inter-tiendas (lógica, persistencia, match POS, exporter XLSX)", "done": true },
+        { "label": "Dashboard Streamlit con 5 vistas (Surtir, Compra, Rebalanceo, Auditoría Rebalanceo, Auditoría Backtest)", "done": true },
+        { "label": "Modelo 2 modos (intra_cluster / ruta direccional) + TSP cluster-coherente", "done": true },
+        { "label": "Smoke E2E con datos --live + validación con el comprador", "done": false, "wip": true },
+        { "label": "Documentación final (CLAUDE.md, lecciones L-S9-*) y cleanup BD", "done": false }
       ]
     }
   ]
